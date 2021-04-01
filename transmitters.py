@@ -175,7 +175,8 @@ class transmitter_am(gr.hier_block2):
         )
         self.rate = 44.1e3 / 200e3
         # self.rate = 200e3/44.1e3
-        self.interp = filter.fractional_resampler_ff(0.0, self.rate)
+        # Build the resampling MMSE filter (float input, float output)
+        self.interp = filter.mmse_resampler_ff(0.0, self.rate)
         self.cnv = blocks.float_to_complex()
         self.mul = blocks.multiply_const_cc(1.0)
         self.add = blocks.add_const_cc(1.0)
@@ -197,7 +198,7 @@ class transmitter_amssb(gr.hier_block2):
         )
         self.rate = 44.1e3 / 200e3
         # self.rate = 200e3/44.1e3
-        self.interp = filter.fractional_resampler_ff(0.0, self.rate)
+        self.interp = filter.mmse_resampler_ff(0.0, self.rate)
         #        self.cnv = blocks.float_to_complex()
         self.mul = blocks.multiply_const_ff(1.0)
         self.add = blocks.add_const_ff(1.0)
